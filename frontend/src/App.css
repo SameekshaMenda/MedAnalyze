@@ -1,0 +1,33 @@
+.App {
+  text-align: center;
+  padding: 40px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+input[type="file"],
+input[type="text"] {
+  padding: 10px;
+  margin: 10px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #1976d2;
+  color: white;
+  border: none;
+  margin: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+.answer {
+  background-color: #e3f2fd;
+  border: 1px solid #90caf9;
+  padding: 20px;
+  margin-top: 20px;
+  border-radius: 8px;
+}
