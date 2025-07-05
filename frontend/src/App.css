@@ -31,3 +31,19 @@ button:hover {
   margin-top: 20px;
   border-radius: 8px;
 }
+
+.answer-text {
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 10px;
+  font-family: 'Segoe UI', sans-serif;
+  line-height: 1.6;
+}
+
+.answer-text ul {
+  padding-left: 20px;
+}
+
+.answer-text li {
+  margin-bottom: 5px;
+}
