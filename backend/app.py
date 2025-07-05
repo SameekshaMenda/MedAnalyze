@@ -13,7 +13,7 @@ CORS(app)
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 
-client = MongoClient("mongodb+srv://sameekshamenda19:R0HrXewa0Z2qUO2J@medanalyse.cdwabgx.mongodb.net/?retryWrites=true&w=majority&appName=medanalyse")
+client = MongoClient(os.getenv('MONGO_URI', 'mongodb://localhost:27017/'))
 db = client.medAnalyze
 users = db.users
 
