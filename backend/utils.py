@@ -24,28 +24,57 @@ def process_pdf(file_path):
     vector_index = FAISS.from_documents(docs, embedding)
     return vector_index, docs
 
-def ask_question(question, index):
-    qa_chain = RetrievalQA.from_chain_type(
-        llm=llm,
-        retriever=index.as_retriever(),
-        return_source_documents=False
-    )
-    result = qa_chain.run(question)
-    return result
-
 # def ask_question(question, index):
-
-#     retriever = index.as_retriever()
-#     docs = retriever.invoke(question)
-
-#     prompt = (
-#         "You are a knowledgeable medical assistant. Based strictly on the medical document provided, "
-#         "answer the question below with medically accurate and evidence-based information.\n\n"
-#         f"Question: {question}"
+#     qa_chain = RetrievalQA.from_chain_type(
+#         llm=llm,
+#         retriever=index.as_retriever(),
+#         return_source_documents=False
 #     )
+#     result = qa_chain.run(question)
+#     return result
 
-#     model = ChatGoogleGenerativeAI(model="gemini-pro", temperature=0.3)
-#     response = model.invoke(prompt)
+def ask_question(question, index):
+    retriever = index.as_retriever()
+    docs = retriever.invoke(question)
 
-#     return response.content
+    context = "\n\n".join([doc.page_content for doc in docs])
+
+    prompt = (
+        "You are a knowledgeable medical assistant. Based strictly on the medical document provided, "
+        "answer the question below in **Markdown format** using bullet points, headings, and bold text where appropriate "
+        "to ensure readability.\n\n"
+        f"Context:\n{context}\n\n"
+        f"Question: {question}"
+    )
+
+    model = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
+        temperature=0.3,
+        google_api_key=GOOGLE_API_KEY
+    )
+
+    response = model.invoke(prompt)
+    return response.content
+    retriever = index.as_retriever()
+    docs = retriever.invoke(question)
+
+    context = "\n\n".join([doc.page_content for doc in docs])
+
+    prompt = (
+        "You are a knowledgeable medical assistant. Based strictly on the medical document provided, "
+        "answer the question below with medically accurate and evidence-based information.\n\n"
+        f"Context:\n{context}\n\n"
+        f"Question: {question}"
+    )
+
+    model = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",  # or gemini-1.5-flash
+        temperature=0.3,
+        google_api_key=GOOGLE_API_KEY
+    )
+
+    response = model.invoke(prompt)
+    return response.content
+
+
 
